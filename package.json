@@ -5,12 +5,14 @@
   "main": "server/index.js",
   "scripts": {
     "start": "node server/index.js",
-    "develop": "node node_modules/nodemon/bin/nodemon develop.js"
+    "develop": "node node_modules/nodemon/bin/nodemon develop.js",
+    "postinstall": "node node_modules/bower/bin/bower install"
   },
   "author": "Milina Udara",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.12.2",
+    "bower": "^1.4.1",
     "express": "^4.12.3",
     "mysql": "^2.6.1",
     "pg": "^4.3.0",
