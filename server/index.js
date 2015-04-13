@@ -19,14 +19,15 @@ var Product = sequelize.define("Product", {
  
 
 var create = function (req, res) {
-    var newUser={
+    var newProduct={
         productName: req.body.productName,
         costPrice:req.body.costPrice,
         sellingPrice: req.body.sellingPrice,
         quantity:req.body.quantity
     }
-    Product.create(newUser).then(function () {
-        res.send(200);
+    Product.create(newProduct).then(function (product) {
+        res.status(200).json(product);
+  
     });
 };
  
@@ -34,7 +35,7 @@ var create = function (req, res) {
  
 sequelize.sync().then(function (err) {
     app.post("/product/add", create);
-    app.listen(5000);
+    app.listen(process.env.PORT||5000);
 });
  
 
