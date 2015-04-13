@@ -1,4 +1,4 @@
-var app = angular.module("pms",["ngRoute","angular-loading-bar"]);
+var app = angular.module("pms",["ngRoute","angular-loading-bar","ui.bootstrap"]);
 
 app.config(["$routeProvider",function ($routeProvider) {
     $routeProvider.when("/", {
