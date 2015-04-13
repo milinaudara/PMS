@@ -33,16 +33,26 @@ var create = function(req, res) {
     });
 };
 
-var search = function(req, res) {
+var edit = function(req, res) {
 
+    Product.find(req.body.id).then(function(product) {
+
+        product.productName = req.body.productName;
+        product.sellingPrice = req.body.sellingPrice;
+        product.save().then(function(updatedProduct) {
+            res.status(200).json(updatedProduct);
+        })
+    });
+};
+var search = function(req, res) {
     Product.findAll({
         where: {
             productName: {
-                $like: req.params.searchText+'%'
+                $like: req.params.searchText + '%'
             }
         }
     }).then(function(products) {
-         res.send(products);
+        res.send(products);
     })
 };
 
@@ -52,5 +62,6 @@ var search = function(req, res) {
 sequelize.sync().then(function(err) {
     app.post("/product/add", create);
     app.get("/productSearch/:searchText", search);
+    app.put("/product/edit", edit);
     app.listen(process.env.PORT || 5000);
 });
