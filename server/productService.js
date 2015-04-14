@@ -34,7 +34,6 @@ module.exports = function(sequelize) {
                     },
                 },
                 limit: 10,
-                order: 'productName'
             }).then(function(products) {
                 res.send(products);
             })
