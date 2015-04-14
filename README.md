@@ -13,8 +13,10 @@ angular application which can be used to Add products, Search products, and Edit
 ### Running the application
 Add your sql connection details in both server/index.js and config/config.json
 Open your command line to the root directory of the repository.  
-Run 
+Run
+ 
 `npm install`
+
 `npm run develop` 
 
 Then navigate your browser to `http://localhost:<port>` to see the app running in
@@ -30,7 +32,7 @@ JsHint :`npm run jshint`
 
 ### Api Details
 
-Product api can be access through '/api/product'
+Product api can be access through `/api/product`
 
 **Query string parameters**
 
@@ -44,4 +46,4 @@ Product api can be access through '/api/product'
 
 **Sample URL**
 
-'http://localhost:5000/api/product?sortOrder=sellingPrice&size=100&filterType=gt&filterValue=23'
+`http://localhost:5000/api/product?sortOrder=sellingPrice&size=100&filterType=gt&filterValue=23`
