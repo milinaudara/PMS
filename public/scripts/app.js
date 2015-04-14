@@ -36,9 +36,12 @@ app.directive("notLessThan", function() {
         link: function(scope, ele, attrs, ctrl) {
             ctrl.$parsers.unshift(function(value) {
                 if (value) {
-                        var valid = parseInt(attrs.originalValue) >= parseInt(attrs.comparingValue)
+                    attrs.$observe("originalValue", function(originalValue) {
+                        var valid = parseInt(originalValue) >= parseInt(attrs.comparingValue)
                         ctrl.$setValidity('notLessThan', valid);
-               
+                    });
+
+
                 }
                 return value;
             });

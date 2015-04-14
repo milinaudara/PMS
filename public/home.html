@@ -10,41 +10,54 @@
         </form>
     </div>
     <div class="panel-body">
-        <div ng-show=selectedProduct>
-            <form class="form-horizontal" ng-submit="editProduct()">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">Product Id :</label>
-                    <div class="col-sm-4">
-                        {{selectedProduct.productId}}
+        <div ng-show=hasProduct&&selectedProduct>
+            <form novalidate class="form-horizontal" name="productform" ng-submit="editProduct()">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Product Id :</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" id="productId" ng-model="selectedProduct.productId" disabled>
+                        </div>
                     </div>
-                    <label class="col-sm-2 control-label">Quantity :</label>
-                    <div class="col-sm-4">
-                        {{selectedProduct.quantity}}
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Quantity :</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" id="quantity" ng-model="selectedProduct.quantity" disabled>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="productName" class="col-sm-2 control-label">Product Name:</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="productName" placeholder="Product Name" ng-model="selectedProduct.productName">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="sellingPrice" class="col-sm-2 control-label">Selling Price:</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="sellingPrice" placeholder="Selling Price" ng-model="selectedProduct.sellingPrice">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Cost Price :</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" id="costPrice" ng-model="selectedProduct.costPrice" disabled>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">Cost Price :</label>
-                    <div class="col-sm-4">
-                        {{selectedProduct.costPrice}}
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="productName" class="col-md-3 control-label">Product Name:</label>
+                        <div class="col-md-9" ng-class="{'has-error': productform.productName.$invalid}">
+                            <input type="text" name="productName" class="form-control" id="productName" placeholder="Product Name" ng-model="selectedProduct.productName" required ng-pattern="/^[a-zA-Z0-9]*$/">
+                            <div ng-show="productform.$submitted || productform.productName.$touched">
+                                <div class="text-danger" ng-show="productform.productName.$error.required">Product name is required.</div>
+                                <div class="text-danger" ng-show="productform.productName.$error.pattern">Product name should be alphanumeric.</div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;" />
+                    <div class="form-group">
+                        <label for="sellingPrice" class="col-md-3 control-label">Selling Price:</label>
+                        <div class="col-md-9" ng-class="{'has-error': productform.sellingPrice.$invalid}">
+                            <input type="text" name="sellingPrice" class="form-control" id="sellingPrice" placeholder="Selling Price" ng-model="selectedProduct.sellingPrice" required ng-currency not-less-than original-value="{{selectedProduct.sellingPrice}}" comparing-value="{{selectedProduct.costPrice}}">
+                            <div ng-show="productform.$submitted || productform.sellingPrice.$touched">
+                                <div class="text-danger" ng-show="productform.sellingPrice.$error.required">Selling price is required.</div>
+                                <div class="text-danger" ng-show="productform.sellingPrice.$error.notLessThan">Selling price can't be less than Cost price.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;" />
             </form>
-        </div>
-        <div ng-show=!selectedProduct>
-           <div class="alert alert-warning" role="alert">No Maching Prodcut</div>
+            </div>
+            <div ng-show=!hasProduct>
+                <div class="alert alert-warning" role="alert">No Maching Prodcut</div>
+            </div>
         </div>
     </div>
-</div>
