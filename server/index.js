@@ -25,5 +25,6 @@ sequelize.getMigrator({
     app.post("/product", productService.create);
     app.get("/product/:searchText", productService.search);
     app.put("/product", productService.edit);
+    app.get("/api/product", productService.api);
     app.listen(process.env.PORT || 5000);
 });

@@ -1,5 +1,5 @@
 'use strict';
-
+var _ = require('underscore');
 module.exports = function(sequelize) {
     var model = require('./model')(sequelize);
     var util = require('util')
@@ -57,6 +57,55 @@ module.exports = function(sequelize) {
                 },
                 limit: 10,
             }).then(function(products) {
+                var productList = products.map(function(product) {
+                    return {
+                        productId: product.id,
+                        productName: product.productName,
+                        costPrice: product.costPrice,
+                        sellingPrice: product.sellingPrice,
+                        quantity: product.quantity
+                    };
+                });
+                res.send(productList);
+            })
+        },
+        api: function(req, res) {
+            var size = req.query.size;
+            var sortOrder = req.query.sortOrder;
+            var filterType = req.query.filterType;
+            var filterValue = req.query.filterValue;
+            if (!size) {
+                size = 100;
+            }
+            console.log(req.params);
+            if (!sortOrder) {
+                sortOrder = 'productName';
+            }
+
+            var array = [{
+                filterType: "gt",
+                condition: {
+                    $gt: filterValue
+                }
+            }, {
+                filterType: "lt",
+                condition: {
+                    $lt: filterValue
+                }
+            }]
+            var wherefilter = _.find(array, function(filter) {
+                return filter.filterType === filterType;
+            });
+
+            var filter = {
+                limit: size,
+                order: [sortOrder],
+                where: {
+                    costPrice: wherefilter.condition
+                }
+            }
+
+            Product.findAll(filter).then(function(products) {
                 var productList = products.map(function(product) {
                     return {
                         productId: product.id,
