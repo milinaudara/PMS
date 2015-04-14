@@ -5,7 +5,7 @@ var Sequelize = require('sequelize');
 module.exports = function(sequelize) {
 
     var Product = sequelize.define("Product", {
-        productId: Sequelize.INTEGER,
+        id: Sequelize.INTEGER,
         productName: Sequelize.STRING,
         costPrice: Sequelize.DECIMAL,
         sellingPrice: Sequelize.DECIMAL,
@@ -14,6 +14,5 @@ module.exports = function(sequelize) {
 
     return {
         Product: Product,
-
     };
 };

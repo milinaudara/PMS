@@ -37,7 +37,7 @@ app.directive("notLessThan", function() {
             ctrl.$parsers.unshift(function(value) {
                 if (value) {
                     attrs.$observe("originalValue", function(originalValue) {
-                        var valid = parseInt(originalValue) >= parseInt(attrs.comparingValue)
+                        var valid = parseFloat(originalValue) >= parseFloat(attrs.comparingValue);
                         ctrl.$setValidity('notLessThan', valid);
                     });
 
