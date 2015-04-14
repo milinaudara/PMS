@@ -9,12 +9,64 @@ module.exports = function(sequelize) {
         checkEditValidation(req);
         req.checkBody('costPrice', 'Cost price Invalid').notEmpty().isFloat();
         req.checkBody('quantity', 'Quantity Invalid').notEmpty().isInt();
-
-    }
+    };
 
     var checkEditValidation = function(req) {
         req.checkBody('productName', 'Product Name Invalid').notEmpty().isAlphanumeric();
         req.checkBody('sellingPrice', 'Selling price Invalid').notEmpty().isFloat().gte(req.body.costPrice);
+    };
+
+    var getApiFilter = function(req) {
+        var size = req.query.size;
+        var sortOrder = req.query.sortOrder;
+        var filterType = req.query.filterType;
+        var filterValue = req.query.filterValue;
+        if (!size) {
+            size = 100;
+        }
+        if (!sortOrder) {
+            sortOrder = 'productName';
+        }
+
+        var array = [{
+            filterType: "gt",
+            condition: {
+                $gt: filterValue
+            }
+        }, {
+            filterType: "lt",
+            condition: {
+                $lt: filterValue
+            }
+        }, {
+            filterType: "gte",
+            condition: {
+                $gte: filterValue
+            }
+        }, {
+            filterType: "lte",
+            condition: {
+                $lt: filterValue
+            }
+        }, {
+            filterType: "e",
+            condition: filterValue
+
+        }]
+
+        var filterObject = {
+            limit: size,
+            order: [sortOrder],
+        }
+        if (filterType && filterValue) {
+            var wherefilter = _.find(array, function(filter) {
+                return filter.filterType === filterType;
+            });
+            filterObject.where = {
+                costPrice: wherefilter.condition
+            }
+        }
+        return filterObject;
     }
 
     return {
@@ -57,7 +109,7 @@ module.exports = function(sequelize) {
                 },
                 limit: 10,
             }).then(function(products) {
-                var productList = products.map(function(product) {
+                var productList = _.map(products, function(product) {
                     return {
                         productId: product.id,
                         productName: product.productName,
@@ -70,53 +122,33 @@ module.exports = function(sequelize) {
             })
         },
         api: function(req, res) {
-            var size = req.query.size;
-            var sortOrder = req.query.sortOrder;
-            var filterType = req.query.filterType;
-            var filterValue = req.query.filterValue;
-            if (!size) {
-                size = 100;
-            }
-            console.log(req.params);
-            if (!sortOrder) {
-                sortOrder = 'productName';
-            }
+            try {
+                var filter = getApiFilter(req);
+                Product.findAll(filter).then(function(products) {
+                    var productList = _.map(products, function(product) {
+                        return {
+                            productId: product.id,
+                            productName: product.productName,
+                            costPrice: product.costPrice,
+                            sellingPrice: product.sellingPrice,
+                            quantity: product.quantity
+                        };
+                    });
+                    var totalPrice = _.reduce(products, function(memo, product) {
+                        return memo + product.costPrice;
+                    }, 0);
 
-            var array = [{
-                filterType: "gt",
-                condition: {
-                    $gt: filterValue
-                }
-            }, {
-                filterType: "lt",
-                condition: {
-                    $lt: filterValue
-                }
-            }]
-            var wherefilter = _.find(array, function(filter) {
-                return filter.filterType === filterType;
-            });
-
-            var filter = {
-                limit: size,
-                order: [sortOrder],
-                where: {
-                    costPrice: wherefilter.condition
-                }
-            }
-
-            Product.findAll(filter).then(function(products) {
-                var productList = products.map(function(product) {
-                    return {
-                        productId: product.id,
-                        productName: product.productName,
-                        costPrice: product.costPrice,
-                        sellingPrice: product.sellingPrice,
-                        quantity: product.quantity
-                    };
+                    var apiResault = {
+                        products: productList,
+                        totalPrice: totalPrice
+                    }
+                    res.send(apiResault);
                 });
-                res.send(productList);
-            })
+
+            } catch (err) {
+                res.send('Something went wrong check your qurery parameters', 400);
+          }
         }
     };
+
 };
