@@ -40,7 +40,7 @@ Product api can be access through `/api/product`
 
 **sortOrder** : sort order (default 'productName') (available - `id`, `productName`, `costPrice`, `sellingPrice`, `quantity`)
 
-**filterType** :filter condition on cost price `gt` (grater than),  `gte` (grater than or equal)  , `lt` (leas than), `lte` (leas than or equal), `e` (equl)
+**filterType** :filter condition on cost price `gt` (grater than),  `gte` (grater than or equal)  , `lt` (leas than), `lte` (leas than or equal), `e` (equal)
 
 **filterValue** = value for compaire
 
