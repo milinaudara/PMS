@@ -30,4 +30,5 @@ sortOrder : sort order (default 'productName') (available - id, productName, cos
 filterType :filter condition on cost price gt (grater than),  gte (grater than or equal)  , lt (leas than), lte(leas than or equal), e (equl)
 filterValue = value for compaire
 
-Sample URL http://localhost:5000/api/product?sortOrder=sellingPrice&size=100&filterType=gt&filterValue=23
+Sample URL 
+http://localhost:5000/api/product?sortOrder=sellingPrice&size=100&filterType=gt&filterValue=23
