@@ -23,7 +23,9 @@ your browser.  The port may be configured in the server/index.js file near the t
 ### Run tests and jshint
 
 Server side test :npm run mocha
+
 Client side test :npm run karma
+
 JsHint :npm run jshint
 
 ### Api Details
