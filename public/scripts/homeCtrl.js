@@ -1,7 +1,7 @@
 app.controller("homeCtrl", ["$scope", "$http", function($scope, $http) {
     $scope.hasProduct = false;
     $scope.searchProduct = function(val) {
-        return $http.get('/productSearch/' + val).then(function(response) {
+        return $http.get('/product/' + val).then(function(response) {
             $scope.selectedProduct = null;
             var productList = response.data;
             $scope.hasProduct = productList.length;
@@ -17,7 +17,7 @@ app.controller("homeCtrl", ["$scope", "$http", function($scope, $http) {
 
     $scope.editProduct = function($item) {
         if ($scope.productform.$valid) {
-            $http.put("/product/edit", $scope.selectedProduct).success(function(product) {
+            $http.put("/product", $scope.selectedProduct).success(function(product) {
                 toastr.success('Successfully edited product ' + product.productName);
             }).error(function(data, statusCode) {
                 if (statusCode == 403) {

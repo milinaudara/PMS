@@ -8,60 +8,13 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json())
 app.use(express.static(__dirname + "/../public"));
 
-
 var sequelize = new Sequelize(process.env.DATABASE_URL || "mysql://udara:123456@localhost:3306/pms_db");
 
-var Product = sequelize.define("Product", {
-    productId: Sequelize.INTEGER,
-    productName: Sequelize.STRING,
-    costPrice: Sequelize.STRING,
-    sellingPrice: Sequelize.STRING,
-    quantity: Sequelize.STRING
-});
-
-
-var create = function(req, res) {
-    var newProduct = {
-        productName: req.body.productName,
-        costPrice: req.body.costPrice,
-        sellingPrice: req.body.sellingPrice,
-        quantity: req.body.quantity
-    }
-    Product.create(newProduct).then(function(product) {
-        res.status(200).json(product);
-
-    });
-};
-
-var edit = function(req, res) {
-
-    Product.find(req.body.id).then(function(product) {
-
-        product.productName = req.body.productName;
-        product.sellingPrice = req.body.sellingPrice;
-        product.save().then(function(updatedProduct) {
-            res.status(200).json(updatedProduct);
-        })
-    });
-};
-var search = function(req, res) {
-    Product.findAll({
-        where: {
-            productName: {
-                $like: req.params.searchText + '%'
-            }
-        }
-    }).then(function(products) {
-        res.send(products);
-    })
-};
-
-
-
+var productService = require("./productService")(sequelize);
 
 sequelize.sync().then(function(err) {
-    app.post("/product/add", create);
-    app.get("/productSearch/:searchText", search);
-    app.put("/product/edit", edit);
+    app.post("/product", productService.create);
+    app.get("/product/:searchText", productService.search);
+    app.put("/product", productService.edit);
     app.listen(process.env.PORT || 5000);
 });
