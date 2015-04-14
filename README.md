@@ -14,7 +14,7 @@ angular application which can be used to Add products, Search products, and Edit
 Add your sql connection details in both server/index.js and config/config.json
 Open your command line to the root directory of the repository.  
 Run
- 
+
 `npm install`
 
 `npm run develop` 
@@ -23,6 +23,8 @@ Then navigate your browser to `http://localhost:<port>` to see the app running i
 your browser.  The port may be configured in the server/index.js file near the top.
 
 ### Run tests and jshint
+
+Add your test db sql connection details in both test/sever/dbConfig.js 
 
 Server side test :`npm run mocha`
 

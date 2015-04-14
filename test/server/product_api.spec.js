@@ -2,9 +2,8 @@
 var expect = require("expect");
 var Sequelize = require("sequelize");
 var _ = require("underscore");
-var sequelize = new Sequelize("mysql://udara:123456@localhost:3306/pms_test_db", {
-    logging: false
-});
+var dbConfig = require("./dbConfig")
+var sequelize = new Sequelize(dbConfig.conString(), { logging: false});
 var model = require("../../server/model")(sequelize);
 var productService = require("./../../server/productService")(sequelize);
 describe("Product api ", function() {
