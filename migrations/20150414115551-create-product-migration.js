@@ -3,11 +3,11 @@
 module.exports = {
     up: function(migration, DataTypes, done) {
         migration.createTable('Products', {
-  /*          id: {
+            id: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
                 autoIncrement: true
-            },*/
+            },
             createdAt: {
                 type: DataTypes.DATE
             },
@@ -36,6 +36,6 @@ module.exports = {
     },
 
     down: function(migration, DataTypes, done) {
-     migration.dropTable('Products').complete(done);
+        migration.dropTable('Products').complete(done);
     }
 };

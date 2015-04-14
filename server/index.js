@@ -11,7 +11,9 @@ app.use(bodyParser.json());
 app.use(expressValidator(customValidation.options));
 app.use(express.static(__dirname + "/../public"));
 
-var sequelize = new Sequelize(process.env.DATABASE_URL || "mysql://udara:123456@localhost:3306/pms_db");
+var sequelize = new Sequelize(process.env.DATABASE_URL || "mysql://udara:123456@localhost:3306/pms_db" ,{
+  omitNull: true
+});
 
 var productService = require("./productService")(sequelize);
 
