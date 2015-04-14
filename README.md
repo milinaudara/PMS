@@ -14,19 +14,19 @@ angular application which can be used to Add products, Search products, and Edit
 Add your sql connection details in both server/index.js and config/config.json
 Open your command line to the root directory of the repository.  
 Run 
-'npm install'
-'npm run develop' 
+`npm install`
+`npm run develop` 
 
 Then navigate your browser to `http://localhost:<port>` to see the app running in
 your browser.  The port may be configured in the server/index.js file near the top.
 
 ### Run tests and jshint
 
-Server side test :'npm run mocha'
+Server side test :`npm run mocha`
 
-Client side test :'npm run karma'
+Client side test :`npm run karma`
 
-JsHint :'npm run jshint'
+JsHint :`npm run jshint`
 
 ### Api Details
 
@@ -36,9 +36,9 @@ Product api can be access through '/api/product'
 
 **size** : size of the array (default 100)
 
-**sortOrder** : sort order (default 'productName') (available - id, productName, costPrice, sellingPrice, quantity)
+**sortOrder** : sort order (default 'productName') (available - `id`, `productName`, `costPrice`, `sellingPrice`, `quantity`)
 
-**filterType** :filter condition on cost price gt (grater than),  gte (grater than or equal)  , lt (leas than), lte(leas than or equal), e (equl)
+**filterType** :filter condition on cost price `gt` (grater than),  `gte` (grater than or equal)  , `lt` (leas than), `lte` (leas than or equal), `e` (equl)
 
 **filterValue** = value for compaire
 
