@@ -72,7 +72,8 @@ module.exports = function(sequelize) {
     return {
         create: function(req, res) {
             checkCreateValidation(req)
-            if (req.validationErrors()) {
+            var errors = req.validationErrors();
+            if (errors) {
                 res.send('There have been validation errors: ' + util.inspect(errors), 400);
                 return;
             }
@@ -87,12 +88,14 @@ module.exports = function(sequelize) {
             });
         },
         edit: function(req, res) {
-            checkEditValidation(req);
-            if (req.validationErrors()) {
-                res.send('There have been validation errors: ' + util.inspect(errors), 400);
-                return;
-            }
             Product.find(req.body.productId).then(function(product) {
+                req.body.costPrice=product.costPrice;
+                checkEditValidation(req);
+                var errors = req.validationErrors();
+                if (errors) {
+                    res.send('There have been validation errors: ' + util.inspect(errors), 400);
+                    return;
+                }
                 product.productName = req.body.productName;
                 product.sellingPrice = req.body.sellingPrice;
                 product.save().then(function(updatedProduct) {
@@ -110,6 +113,7 @@ module.exports = function(sequelize) {
                 limit: 10,
             }).then(function(products) {
                 var productList = _.map(products, function(product) {
+
                     return {
                         productId: product.id,
                         productName: product.productName,
@@ -147,7 +151,7 @@ module.exports = function(sequelize) {
 
             } catch (err) {
                 res.send('Something went wrong check your qurery parameters', 400);
-          }
+            }
         }
     };
 

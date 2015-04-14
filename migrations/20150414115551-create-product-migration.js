@@ -19,11 +19,11 @@ module.exports = {
                 allowNull: false
             },
             costPrice: {
-                type: DataTypes.DECIMAL,
+                type: DataTypes.DECIMAL(10,2),
                 allowNull: false
             },
             sellingPrice: {
-                type: DataTypes.DECIMAL,
+                type: DataTypes.DECIMAL(10,2),
                 allowNull: false
             },
             quantity: {
