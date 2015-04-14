@@ -36,15 +36,14 @@ app.directive("notLessThan", function() {
             ctrl.$parsers.unshift(function(value) {
                 if (value) {
                     attrs.$observe("originalValue", function(originalValue) {
-                        var valid = parseFloat(originalValue) >= parseFloat(attrs.comparingValue);
-                        ctrl.$setValidity('notLessThan', valid);
+                        attrs.$observe("comparingValue", function(comparingValue) {
+                            var valid = parseFloat(originalValue) >= parseFloat(acomparingValue);
+                            ctrl.$setValidity('notLessThan', valid);
+                        });
                     });
-
-
                 }
                 return value;
             });
-
         }
     };
 });
