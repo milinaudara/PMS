@@ -20,6 +20,12 @@ npm run develop
 Then navigate your browser to `http://localhost:<port>` to see the app running in
 your browser.  The port may be configured in the server/index.js file near the top.
 
+### Run tests and jshint
+
+Server side test :npm run mocha
+Client side test :npm run karma
+JsHint :npm run jshint
+
 ### Api Details
 
 Product api can be access through /api/product

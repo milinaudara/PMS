@@ -1,12 +1,9 @@
 "use strict";
 var expect = require("expect");
 var Sequelize = require("sequelize");
-var expressValidator = require('express-validator')();
-var _ = require("underscore");
 var sequelize = new Sequelize("mysql://udara:123456@localhost:3306/pms_test_db", {
     logging: false
 });
-var model = require("../../server/model")(sequelize);
 var productService = require("./../../server/productService")(sequelize);
 var stub = require("./stub");
 
@@ -24,7 +21,7 @@ describe("Product create ", function() {
         }).success(function() {
             stub.reqStub(function(r) {
                 req = r;
-                req.body = validProduct
+                req.body = validProduct;
                 done();
             });
         });
@@ -35,7 +32,7 @@ describe("Product create ", function() {
             json: jsonCallback,
             status: statusCallback,
             send: statusCallback
-        }
+        };
     };
 
     it("should save valid product", function(done) {
@@ -49,7 +46,7 @@ describe("Product create ", function() {
     });
 
     it("should validate productName alphanumaric", function(done) {
-        req.body.productName = 'Product_1'
+        req.body.productName = 'Product_1';
         productService.create(req, mockResponse(function(statusMassage, statusCode) {
             expect(statusMassage).toContain("productName");
             expect(statusCode).toEqual(400);
@@ -58,7 +55,7 @@ describe("Product create ", function() {
     });
 
     it("should validate selling price is cannot be less than cost price", function(done) {
-        req.body.sellingPrice = 5
+        req.body.sellingPrice = 5;
         productService.create(req, mockResponse(function(statusMassage, statusCode) {
             expect(statusMassage).toContain("sellingPrice");
             expect(statusCode).toEqual(400);

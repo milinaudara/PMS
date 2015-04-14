@@ -1,6 +1,5 @@
+"use strict";
 var app = angular.module("pms", ["ngRoute", "angular-loading-bar", "ui.bootstrap", "ng-currency"]);
-
-
 app.config(["$routeProvider", function($routeProvider) {
     $routeProvider.when("/", {
         templateUrl: "home.html",
@@ -16,7 +15,7 @@ app.directive('numbersOnly', function() {
         require: 'ngModel',
         link: function(scope, element, attrs, modelCtrl) {
             modelCtrl.$parsers.push(function(inputValue) {
-                if (inputValue == undefined) return ''
+                if (inputValue === undefined) return '';
                 var transformedInput = inputValue.replace(/[^0-9]/g, '');
                 if (transformedInput != inputValue) {
                     modelCtrl.$setViewValue(transformedInput);
@@ -47,5 +46,5 @@ app.directive("notLessThan", function() {
             });
 
         }
-    }
+    };
 });

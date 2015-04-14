@@ -2,7 +2,7 @@
 var _ = require('underscore');
 module.exports = function(sequelize) {
     var model = require('./model')(sequelize);
-    var util = require('util')
+    var util = require('util');
     var Product = model.Product;
 
     var checkCreateValidation = function(req) {
@@ -52,26 +52,26 @@ module.exports = function(sequelize) {
             filterType: "e",
             condition: filterValue
 
-        }]
+        }];
 
         var filterObject = {
             limit: size,
             order: [sortOrder],
-        }
+        };
         if (filterType && filterValue) {
             var wherefilter = _.find(array, function(filter) {
                 return filter.filterType === filterType;
             });
             filterObject.where = {
                 costPrice: wherefilter.condition
-            }
+            };
         }
         return filterObject;
-    }
+    };
 
     return {
         create: function(req, res) {
-            checkCreateValidation(req)
+            checkCreateValidation(req);
             var errors = req.validationErrors();
             if (errors) {
                 res.send('There have been validation errors: ' + util.inspect(errors), 400);
@@ -82,7 +82,7 @@ module.exports = function(sequelize) {
                 costPrice: req.body.costPrice,
                 sellingPrice: req.body.sellingPrice,
                 quantity: req.body.quantity
-            }
+            };
             Product.create(newProduct).then(function(product) {
                 res.status(200).json(product);
             });
@@ -100,7 +100,7 @@ module.exports = function(sequelize) {
                 product.sellingPrice = req.body.sellingPrice;
                 product.save().then(function(updatedProduct) {
                     res.status(200).json(updatedProduct);
-                })
+                });
             });
         },
         search: function(req, res) {
@@ -123,7 +123,7 @@ module.exports = function(sequelize) {
                     };
                 });
                 res.send(productList);
-            })
+            });
         },
         api: function(req, res) {
             try {
@@ -145,7 +145,7 @@ module.exports = function(sequelize) {
                     var apiResault = {
                         products: productList,
                         totalPrice: totalPrice
-                    }
+                    };
                     res.send(apiResault);
                 });
 

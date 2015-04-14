@@ -1,4 +1,4 @@
-var customValidation = require('./../../server/customValidation')()
+var customValidation = require('./../../server/customValidation')();
 var expressValidator = require('express-validator')(customValidation.options);
 
 exports.reqStub = function(done) {

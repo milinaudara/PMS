@@ -40,7 +40,7 @@ describe("Product api ", function() {
                 quantity: 23
             }]).then(function() {
                 done();
-            })
+            });
         });
     });
     var mockResponse = function(callback) {
@@ -60,7 +60,7 @@ describe("Product api ", function() {
         }, mockResponse(function(data) {
             expect(data.products.length).toEqual(4);
             expect(data.totalPrice).toEqual(14);
-            expect(_.first(data.products).productName).toEqual('Product_4')
+            expect(_.first(data.products).productName).toEqual('Product_4');
             done();
         }));
     });
@@ -74,7 +74,7 @@ describe("Product api ", function() {
         }, mockResponse(function(data) {
             expect(data.products.length).toEqual(1);
             expect(data.totalPrice).toEqual(1);
-            expect(_.first(data.products).productName).toEqual('Product_1')
+            expect(_.first(data.products).productName).toEqual('Product_1');
             done();
         }));
     });
@@ -98,7 +98,7 @@ describe("Product api ", function() {
         }, mockResponse(function(data) {
             expect(data.products.length).toEqual(5);
             expect(data.totalPrice).toEqual(15);
-            expect(_.first(data.products).productName).toEqual('Product_4')
+            expect(_.first(data.products).productName).toEqual('Product_4');
             done();
         }));
     });

@@ -1,8 +1,6 @@
 "use strict";
 var expect = require("expect");
 var Sequelize = require("sequelize");
-var expressValidator = require('express-validator')();
-var _ = require("underscore");
 var sequelize = new Sequelize("mysql://udara:123456@localhost:3306/pms_test_db", {
     logging: false
 });
@@ -36,8 +34,7 @@ describe("Product edit ", function() {
                     req.body = productRequest;
                     done();
                 });
-            })
-
+            });
         });
     });
     var mockResponse = function(statusCallback, jsonCallback) {
@@ -45,7 +42,7 @@ describe("Product edit ", function() {
             json: jsonCallback,
             status: statusCallback,
             send: statusCallback
-        }
+        };
     };
 
     it("should only editable productname and sellingPrice", function(done) {

@@ -1,3 +1,4 @@
+"use strict";
 app.controller("homeCtrl", ["$scope", "$http", function($scope, $http) {
     $scope.hasProduct = false;
     $scope.searchProduct = function(val) {
@@ -15,7 +16,7 @@ app.controller("homeCtrl", ["$scope", "$http", function($scope, $http) {
         $scope.hasProduct = true;
     };
 
-    $scope.editProduct = function($item) {
+    $scope.editProduct = function() {
         if ($scope.productform.$valid) {
             $http.put("/product", $scope.selectedProduct).success(function(product) {
                 toastr.success('Successfully edited product ' + product.productName);

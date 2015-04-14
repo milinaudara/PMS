@@ -35,7 +35,7 @@ describe("Product search ", function() {
                 quantity: 23
             }]).then(function() {
                 done();
-            })
+            });
         });
     });
     var mockResponse = function(callback) {
@@ -52,7 +52,7 @@ describe("Product search ", function() {
             }
         }, mockResponse(function(data) {
             expect(data.length).toEqual(3);
-            expect(_.first(data).productId).toBeGreaterThan(0)
+            expect(_.first(data).productId).toBeGreaterThan(0);
             done();
         }));
     });
