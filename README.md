@@ -25,10 +25,15 @@ your browser.  The port may be configured in the server/index.js file near the t
 Product api can be access through /api/product
 
 Query string parameters
+
 size : size of the array (default 100)
+
 sortOrder : sort order (default 'productName') (available - id, productName, costPrice, sellingPrice, quantity)
+
 filterType :filter condition on cost price gt (grater than),  gte (grater than or equal)  , lt (leas than), lte(leas than or equal), e (equl)
+
 filterValue = value for compaire
 
-Sample URL 
+Sample URL
+
 http://localhost:5000/api/product?sortOrder=sellingPrice&size=100&filterType=gt&filterValue=23
